@@ -56,6 +56,8 @@ public:
 
 
     friend class iterator_vector<type_t>;
+    template <typename t1>
+    friend Vector<t1> operator*(const t1 &value,const Vector<t1> &vec);
 
 private:
     type_t* data;
