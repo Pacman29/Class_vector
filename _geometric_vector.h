@@ -40,6 +40,7 @@ public:
     Vector<type_t>  operator-  () const;
     Vector<type_t>  operator-  (const Vector<type_t>& vec) const;
     Vector<type_t>& operator-= (const Vector<type_t>& vec);
+
     Vector<type_t>  operator*  (const type_t& value) const;
     const type_t    operator*  (const Vector<type_t>& vec);  //скалярное произвдение
     Vector<type_t>  operator^  (const Vector<type_t>& vec) const;  //векторное произвдение (только для размерности 3)
@@ -63,6 +64,12 @@ private:
     Vector<type_t> get_max(const Vector &v1,const Vector &v2);
     Vector<type_t> get_min(const Vector &v1,const Vector &v2);
 };
+
+template<typename type_t>
+Vector<type_t> operator*(const type_t &value,const Vector<type_t> &vec)
+{
+    return vec*value;
+}
 
 template<typename type_t>
 std::ostream& operator<<(std::ostream& stream, const Vector<type_t>& vec)
