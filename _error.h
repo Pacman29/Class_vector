@@ -47,4 +47,13 @@ public:
         return "work this unsigned type";
     }
 };
+
+class er_Zero : public Base_Error
+{
+public:
+    const char* what()
+    {
+        return "devided by zero";
+    }
+};
 #endif // ERROR_H

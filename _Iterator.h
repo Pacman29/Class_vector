@@ -1,6 +1,8 @@
+#ifndef _ITERATOR_H
+#define _ITERATOR_H
 #include "_iterator_vector_base.h"
 #include "_iteration_er.h"
-#include "_geometric_vector.h"
+
 
 template <typename type_t>
 class iterator_vector : public iterator_vector_base
@@ -18,10 +20,10 @@ public:
     iterator_vector<type_t>  operator ++ (type_t);
     iterator_vector<type_t>& operator -- ();
     iterator_vector<type_t>  operator -- (type_t);
-    const type_t&            operator *  ();
+    type_t                   operator *  ();
     iterator_vector<type_t>& operator += (const ssize_t n);
     iterator_vector<type_t>& operator -= (const ssize_t n);
-    const type_t&            operator [] (const ssize_t n);
+    type_t                   operator [] (const ssize_t& n);
 
     bool operator != (const iterator_vector<type_t>& it);
     bool operator == (const iterator_vector<type_t>& it);
@@ -43,4 +45,4 @@ private:
 };
 
 #include "_iterator_vector.cpp"
-
+#endif

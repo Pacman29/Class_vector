@@ -129,7 +129,7 @@ void Vector<type_t>::resize_vector(size_t new_size)
 }
 \
 template <typename type_t>
-const size_t Vector<type_t>::to_same_size(Vector<type_t> &vec1, Vector<type_t> &vec2)
+static const size_t to_same_size(Vector<type_t> &vec1, Vector<type_t> &vec2) const
 {
     if(vec1.size()<vec2.size())
         vec1.resize_vector(vec2.size());
@@ -290,11 +290,16 @@ const type_t Vector<type_t>::operator*(const Vector<type_t> &vec)
 }
 
 template<typename type_t>
+Vector<type_t> operator*(const type_t &value,const Vector<type_t> &vec)
+{
+    return vec*value;
+}
+
+template<typename type_t>
 Vector<type_t> Vector<type_t>::operator^(const Vector<type_t> &vec) const
 {
     Vector<type_t> copy(vec);
-    to_same_size(*this,copy);
-    if(this->size() != 3)
+    if(this->size() != 3 || vec.size() != 3)
     {
         er_Size er;
         throw er;
@@ -306,7 +311,7 @@ Vector<type_t> Vector<type_t>::operator^(const Vector<type_t> &vec) const
 }
 
 template <typename type_t>
-Vector<type_t> &Vector<type_t>::operator*=(const type_t value)
+Vector<type_t> &Vector<type_t>::operator*=(const type_t& value)
 {
     for(size_t i = 0; i<this->pr_size; ++i)
         this->data[i] *= value;
@@ -316,6 +321,9 @@ Vector<type_t> &Vector<type_t>::operator*=(const type_t value)
 template<typename type_t>
 Vector<type_t> Vector<type_t>::operator/(const type_t& value) const
 {
+    if (!value)
+        throw er_Zero();
+
     Vector<type_t> res(*this);
     for(size_t i = 0; i<res.pr_size; ++i)
         res.data[i] /= value;
@@ -323,8 +331,11 @@ Vector<type_t> Vector<type_t>::operator/(const type_t& value) const
 }
 
 template <typename type_t>
-Vector<type_t> &Vector<type_t>::operator/=(const type_t value)
+Vector<type_t> &Vector<type_t>::operator/=(const type_t& value)
 {
+    if (!value)
+        throw er_Zero();
+
     for(size_t i = 0; i<this->pr_size; ++i)
         this->data[i] /= value;
     return *this;
